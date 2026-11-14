@@ -1,0 +1,43 @@
+name: Build and release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m venv manager/.venv
+          manager/.venv/Scripts/python.exe -m pip install -r manager/requirements.txt
+      - name: Package Lua and desktop tool
+        shell: pwsh
+        run: |
+          manager/.venv/Scripts/python.exe build_mod.py
+          ./manager/build.ps1
+          manager/.venv/Scripts/python.exe package_release.py
+          manager/.venv/Scripts/python.exe package_source.py
+      - name: Publish release assets
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: '影之刃零 · 游玩工具 ${{ github.ref_name }}'
+          body_path: docs/release-notes.md
+          files: |
+            manager/dist/*/PBZ-PlayTools.exe
+            dist/PBZ-PlayTools-*-ue4ss.zip
+            dist/PBZ-PlayTools-*-source.zip
+            dist/SHA256SUMS.txt
+          fail_on_unmatched_files: true

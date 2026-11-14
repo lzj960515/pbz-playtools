@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>影之刃零 · 游玩工具</title>
+  <link rel="stylesheet" href="styles.css"><script defer src="app.js"></script>
+</head><body><main>
+  <header class="app-header">
+    <div class="brand"><svg class="brand-mark" viewBox="0 0 26 38" aria-hidden="true"><path d="M20 2 8 24l4 2L24 4ZM7 25l-3 8M4 28l8 4"/></svg><div><h1>影之刃零</h1><span class="app-name">游玩工具</span></div></div>
+    <div id="connection" class="connection" data-state="waiting" role="status">等待连接</div>
+  </header>
+  <section class="directory-section">
+    <label for="directory">游戏目录</label>
+    <div class="directory-row"><input id="directory" type="text" spellcheck="false" disabled><button id="choose" class="quiet" disabled>选择目录</button></div>
+  </section>
+  <div class="workspace">
+    <section class="map-panel">
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5ZM12 1v3m0 16v3M1 12h3m16 0h3"/></svg>地图定位</h2>
+      <div class="toggle-row"><span>碎片显示</span><button id="fragments-toggle" class="switch-button" type="button" role="switch" aria-label="地图显示碎片" aria-checked="false" disabled></button></div>
+      <p id="map-state" class="feedback" role="status"></p>
+      <div class="item-section">
+        <h3>物品</h3>
+        <div class="item-actions"><button id="item-open" class="secondary" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>选择物品</button><button id="item-clear" class="text-button" disabled>清除</button></div>
+        <p id="item-state" class="feedback" role="status"></p>
+      </div>
+    </section>
+    <section class="equipment-panel">
+      <h2><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19 2 3 3-12 12-3-3ZM4 13l7 7m-6-3-3 5 5-3M3 2l4 4m12 12 3 3"/></svg>装备控制</h2>
+      <div class="random-options">
+        <label class="toggle-row"><span>主武器随机</span><input id="random-weapons" class="switch-input" type="checkbox" disabled></label>
+        <label class="toggle-row"><span>影之武装随机</span><input id="random-shadow" class="switch-input" type="checkbox" disabled></label>
+      </div>
+      <div class="apply-row"><span class="usage">沿用游戏切换键</span><button id="apply" class="secondary compact" disabled>应用设置</button></div>
+      <p id="settings-result" class="feedback" role="status"></p><p id="equipment-state" class="feedback" role="status"></p>
+      <div class="upgrade-section"><h3>主武器与影之武装</h3><button id="upgrade" class="primary" disabled>全部升至 30 级</button><p id="upgrade-result" class="feedback" role="status"></p></div>
+    </section>
+  </div>
+  <div class="installation-bar"><p id="status" class="feedback" role="status"></p><div class="installation-actions"><button id="refresh" class="text-button" disabled>检查安装</button><button id="uninstall" class="text-button" disabled>卸载</button><button id="install" class="primary" disabled>安装 / 更新</button></div></div>
+</main>
+<dialog id="item-picker" aria-labelledby="item-picker-title">
+  <div class="picker-header"><h2 id="item-picker-title">选择物品</h2><button id="item-cancel" class="icon-button" type="button" aria-label="关闭"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></div>
+  <div class="search-field"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="item-query" type="text" placeholder="搜索物品" aria-label="物品名称" autocomplete="off" disabled></div>
+  <p id="item-picker-state" class="feedback" role="status"></p>
+  <div id="item-results" role="listbox" aria-label="物品候选"></div>
+  <div class="picker-footer"><button id="item-confirm" class="primary" disabled>显示在地图</button></div>
+</dialog>
+</body></html>
